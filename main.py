@@ -6,13 +6,15 @@ cappuccino_cost = MENU['cappuccino']['cost']
 
 
 def report():
- '''Prints the remaining ingredients left in the machine'''
- print(f'Water: {water}ml,\nMilk: {milk}ml, \nCoffee: {coffee}g, \nMoney: ${cash}')
+    """Prints the remaining ingredients left in the machine"""
+    print(f'Water: {water}ml,\nMilk: {milk}ml, \nCoffee: {coffee}g, \nMoney: ${cash}')
+
 
 def drink_making(drink):
     updated_resources = {key: resources[key] - MENU[drink]['ingredients'].get(key, 0) for key in resources}
     for ingredient in resources:
         resources[ingredient] = updated_resources[ingredient]
+
 
 def ingredient_check(drink):
     if water - MENU[drink]['ingredients']['water'] <= 0:
@@ -21,7 +23,6 @@ def ingredient_check(drink):
         print('there is no more coffee.')
     if not 'espresso' and milk - MENU[drink]['ingredients']['milk'] <= 0:
         print('there is no more milk.')
-
 
 
 def money_calculator(drink_cost, drink):
@@ -38,34 +39,31 @@ def money_calculator(drink_cost, drink):
         cash += total
         print("Here's your drink, enjoy!")
 
-
     # TODO: 2. calculate how much cash has been earned
-cash = 0
-drink = True
-
-while drink:
-    water = resources['water']
-    milk = resources['milk']
-    coffee = resources['coffee']
-    drink = input('What would you like? (espresso/latte/cappuccino): ')
-
-    if drink == 'report':
-        report()
-    elif drink == 'espresso':
-        ingredient_check('espresso')
-        money_calculator(espresso_cost, 'espresso')
-    elif drink == 'latte':
-        ingredient_check('latte')
-        money_calculator(latte_cost, 'latte')
-    elif drink == 'cappuccino':
-        if ingredient_check('cappuccino'):
-            continue
-        money_calculator(cappuccino_cost, 'cappuccino')
-    else:
-        drink = False
 
 
+if __name__ == '__main__':
 
+    cash = 0
+
+    while True:
+        water = resources['water']
+        milk = resources['milk']
+        coffee = resources['coffee']
+        drink = input('What would you like? (espresso/latte/cappuccino): ')
+
+        if drink == 'report':
+            report()
+        elif drink == 'espresso':
+            ingredient_check('espresso')
+            money_calculator(espresso_cost, 'espresso')
+        elif drink == 'latte':
+            ingredient_check('latte')
+            money_calculator(latte_cost, 'latte')
+        elif drink == 'cappuccino':
+            ingredient_check('cappuccino')
+            money_calculator(cappuccino_cost, 'cappuccino')
+        else:
+            break
 
 # TODO: 4. Check availibility of resources when prompted to make a specific drink
-
